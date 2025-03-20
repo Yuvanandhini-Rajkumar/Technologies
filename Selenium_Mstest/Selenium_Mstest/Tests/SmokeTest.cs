@@ -1,4 +1,5 @@
-﻿using Selenium_Mstest.Pages;
+﻿using OpenQA.Selenium;
+using Selenium_Mstest.Pages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,10 +14,27 @@ namespace Selenium_Mstest.Tests
         [TestMethod]
         public async Task SelectCheckBox()
         {
-            driver.Navigate().GoToUrl("https://the-internet.herokuapp.com/");
+            
             chk.clickmaincheck();
             bool isselected= chk.clickcheckbox(chk.GetCheckbox1());
             Assert.IsTrue(isselected, "checkbox not selected");
+        }
+
+        [TestMethod]
+        public void Iframe()
+        {
+            FramePage.GetMainIframeLocator().Click();
+            FramePage.GetIframeLocator().Click();
+           
+            IWebElement framelocator = driver.FindElement(By.Id("mce_0_ifr"));
+            driver.SwitchTo().Frame(framelocator);
+            bool isvisible = driver.FindElement(By.XPath("//p[text()='Your content goes here.']")).Displayed;
+            Assert.IsTrue(isvisible, "not visible");
+
+            //driver.FindElement(By.Id("//div[@aria-label='Close']")).Click();
+
+
+
         }
     }
 }

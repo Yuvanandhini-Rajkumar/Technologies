@@ -9,19 +9,23 @@ namespace Selenium_Mstest.Tests
     public class BaseTest
     {
         public required IWebDriver driver;
-        public checkboxespage chk;
+        protected checkboxespage chk;
+        protected FramePage FramePage;
+        
         [TestInitialize]
         public void Login()
         {
            driver = new ChromeDriver();
             driver.Manage().Window.Maximize();
             PageInitialization();
+            driver.Navigate().GoToUrl("https://the-internet.herokuapp.com/");
 
         }
 
         public void PageInitialization()
         {
              chk = new checkboxespage(driver);
+            FramePage = new FramePage(driver);
         }
 
         [TestCleanup]
